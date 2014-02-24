@@ -36,6 +36,17 @@ public class TopoSort {
 					adjMatrix[j][k] = in.nextInt();
 				}
 			}
+	
+			/*
+			// Perform Topological Sort	
+			if (graph.isSortable(adjMatrix)) {
+			}
+			
+			// Not Sortable
+			else {
+			}
+			*/
+
 		}
 
 	}
@@ -57,10 +68,20 @@ public class TopoSort {
 		// Mark as visited.
 		visited[vertex] = 1;	
 	
-		// Look at the Walk Through...	
+		// Main Loop for traversing the directed graph.
+		for (i = 0; i < numNodes; i++) {
+			for (j = 0; j < numNodes; j++) {
+				if (adjMatrix[i][j] == 1 && visited[adjMatrix[i][j]] == 0) {
+					vertex = adjMatrix[i][j];		// update the vertex
+					stack.push(vertex);				// push the vertex on the stack
+					visited[vertex] = 1;			// mark the vertex as visited
+					i = vertex;						// update the outer loop to the new vertex
+					j = -1;							// reset the inner loop to 'zero' --> really -1
+				}									// because the for-loop will interate the j-value to zero.
+					
+			}
+		}
 
-
-		return result;
 	}
 
 } // end class 
