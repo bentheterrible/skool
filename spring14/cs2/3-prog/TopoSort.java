@@ -32,8 +32,7 @@ public class TopoSort {
 					adjMatrix[j][k] = in.nextInt();
 				}
 			}
-			
-			if (true) {
+			if (DFS(vertex, numNodes, adjMatrix) != null) {
 				System.out.print("TS(" + i + ",DFS): ");
 				printResult(TS_DFS(DFS(vertex, numNodes, adjMatrix)));
 			//	System.out.print("TS(" + i + ",DBO): ");
@@ -41,7 +40,7 @@ public class TopoSort {
 			}
 			else {
 				System.out.print("TS(" + i + ",DFS): ");
-				printResult(TS_DFS(DFS(vertex, numNodes, adjMatrix)));
+				System.out.println("NO TOPOLOGICAL SORT");
 			//	System.out.print("TS(" + i + ",DBO): ");
 			//	printResult(TS_DBO(DBO(vertex, numNodes, adjMatrix)));
 			}
@@ -63,12 +62,15 @@ public class TopoSort {
 	public static int[] DFS(int vertex, int numNodes, int[][] adjMatrix) { 
 		int[] visited = new int[numNodes];
 		int[] result = new int[numNodes];
+		int[] onTheStack = new int[numNodes];
 		Deque<Integer> stack = new ArrayDeque<Integer>();
 		int x, i, j, k = 0;
 
-		// Initialize every node to unvisited for start of search.
-		for (i = 0; i < numNodes; i++)	
+		// Initialize every node to unvisited and nodes on the stack.
+		for (i = 0; i < numNodes; i++)	{
 			visited[i] = 0;
+			onTheStack[i] = 0;
+		}
 
 		// Mark as visited
 		visited[vertex] = 1;	
@@ -76,15 +78,24 @@ public class TopoSort {
 		// Push the starting vertex on to the stack.
 		stack.push(vertex);
 
+		// mark vertex as being on the stack.
+		onTheStack[vertex] = 1;
+
 		// Main Loop for traversing the directed graph.
 		for(i = 0; i < numNodes; i++) {
 			for(j = 0; j < numNodes; j++) {
+				
+				// Check for cycles.	
+				if (adjMatrix[i][j] == 1 && visited[j] == 1 && onTheStack[j] == 1) {
+					return null;
+				}
 
 				// Check there is a connection from current vertex to next node
 				// and that the node has not been visited.
 				if (adjMatrix[i][j] == 1 && visited[j] == 0) {
 					vertex = j;							// update the vertex
 					stack.push(vertex);					// push the vertex on the stack
+					onTheStack[vertex] = 1;				// mark vertex as being on the stack
 					visited[vertex] = 1;				// mark the vertex as visited
 					i = vertex;							// update the outer loop to the new vertex
 					j = -1;								// reset the inner loop to 'zero' --> really -1
@@ -95,20 +106,22 @@ public class TopoSort {
 					
 					// Check if the stack is not empty	
 					if (stack.peek() != null) {
-						result[k++] = stack.peek();		// add node to be popped to the result array.
-						stack.pop();					// pop the current node (dead end).
-						j = -1;							// reset the inner loop to 'zero' --> really -1
+						result[k++] = stack.peek();			// add node to be popped to the result array.
+						onTheStack[stack.peek()] = 0;		// mark vertex as being on the stack
+						stack.pop();						// pop the current node (dead end).
+						j = -1;								// reset the inner loop to 'zero' --> really -1
 
 						if (stack.peek() != null) {
-							vertex = stack.peek();		// update the vertex with the node on top of the stack.	
+							vertex = stack.peek();			// update the vertex with the node on top of the stack.	
 						}
 						else {
 							// Find the next unvisited node to be the new vertex.
 							for (x = 0; x < numNodes; x++) {
 								if (visited[x] == 0) {
-									vertex = x;			// update the new vertex.
-									visited[x] = 1;		// mark the vertex as visited
-									stack.push(vertex);	// push new vertex on the stack
+									vertex = x;				// update the new vertex.
+									visited[x] = 1;			// mark the vertex as visited
+									stack.push(vertex);		// push new vertex on the stack
+									onTheStack[vertex] = 1;	// mark vertex as being on the stack
 								}								
 							}
 						}
