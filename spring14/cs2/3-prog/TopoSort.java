@@ -17,7 +17,7 @@ public class TopoSort {
 		int i, j, k, numGraphs, vertex = 0, numNodes; /////////// Change the vertex ==> 'vertex' after all function are written //
 
 		// Read in the file.
-		Scanner in = new Scanner( new File("graphs.txt") );
+		Scanner in = new Scanner( new File("test.txt") );
 
 		numGraphs = in.nextInt();
 
@@ -132,6 +132,30 @@ public class TopoSort {
 
 		return result;
 	} // end DFS()
+
+	public static int[] DBO(int vertex, int numNodes, int[][] adjMatrix) { 
+		Queue <Integer> nodes = new LinkedList<Integer>();	
+		int[] result = new int[numNodes];
+		int i, j;
+		
+		// Nested for loop for traversing adjacency matrix
+		for (i = 0; i < numNodes; i++) {
+			for (j = 0; j < numNodes; j++) {
+				
+				// Checks if node has an incoming edge
+				// Moves to next vertex if so
+				if (adjMatrix[j][i] == 1) {
+					break;
+				}
+				
+				// Checks if node does not have incoming edges
+				// Adds to the queue if so
+				else if (adjMatrix[j][i] == 0 && j == numNodes-1) {
+					nodes.offer(i);				// Enqueue vertex to the queue	
+				}
+			}
+		}
+	}
 
 	public static void printResult(int[] arr)
 	{
