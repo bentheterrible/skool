@@ -1,0 +1,28 @@
+
+		do {	
+			// Nested for loop for traversing adjacency matrix
+			for (i = 0; i < numNodes; i++) {
+				for (j = 0; j < numNodes; j++) {
+					
+					// Checks if node has an incoming edge
+					// Moves to next vertex if so
+					if (adjMatrix[j][i] == 1) {
+						break;
+					}
+					
+					// Checks if node does not have incoming edges
+					// Adds to the queue if so
+					else if (adjMatrix[j][i] == 0 && j == numNodes-1) {
+						nodes.offer(i);				// Enqueue vertex to the queue	
+					}
+				} // end inner-loop
+			} // end outer-loop
+
+			if (nodes.peek() != null) {
+				vertex = nodes.poll();
+				result[k++] = vertex;	
+				// delete out going edge of the vertex.
+				
+			}
+
+		} while (nodes.peek() != null);
