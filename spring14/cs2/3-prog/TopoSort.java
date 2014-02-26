@@ -113,6 +113,7 @@ public class TopoSort {
 
 						if (stack.peek() != null) {
 							vertex = stack.peek();			// update the vertex with the node on top of the stack.	
+							i = vertex;						// update the outer loop to the new vertex
 						}
 						else {
 							// Find the next unvisited node to be the new vertex.
