@@ -1,0 +1,353 @@
+/* Generic
+==================================================*/
+
+
+/* http://css-tricks.com/international-box-sizing-awareness-day/ */
+*, *::before, *::after {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+body {
+    background-color: #0a3b6e; /* navy blue */
+    font-family: "open sans", sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+}
+
+#wrap {
+	width:960px;
+	margin: 0px auto 0px auto;
+}
+
+h1, h2, p, ol, ul {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.2;
+}
+
+.clearfix::after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+.orange-button {
+    display: inline-block;
+    background-color: #fd9527; /* orange */
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.15);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 15px 0;
+    text-align: center;
+    text-decoration: none;
+    transition: 0.2s ease-in-out;
+    width: 100%;
+}
+
+.orange-button:hover, .orange-button:focus {
+    background-color: #db792b;
+}
+
+
+/* Header
+==================================================*/
+
+.site-logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 100px;
+    max-width: 80%;
+}
+
+.site-header {
+    background-color: white;
+}
+
+.site-header button {
+    background-color: #f5f5f5; /* light gray */
+    color: #999;
+    border: none;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.15);
+    font-size: 21px;
+    padding: 15px 0;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+.header-contact {
+    display: none;
+    float: right;
+    font-size: 21px;
+    font-weight: bold;
+    padding-right: 10px;
+    padding-top: 15px;
+    text-align: right;
+}
+
+.header-contact p {
+    display: inline;
+}
+
+.header-contact p span {
+    color: #fd9527; /* orange */
+    display: inline;
+    font-style: normal;
+}
+
+.header-contact ul {
+    padding: 0;
+    list-style: none;
+}
+
+.header-contact li {
+    display: inline-block;
+}
+
+.nav-list {
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.15);
+    list-style: none;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.nav-list.is-hidden {
+    display: none;
+}
+
+.site-header nav a {
+    display: block;
+    background-color: #fd9527; /* orange */
+    border-top: 1px solid #fda83e; /* light orange */
+    color: white;
+    font-size: 21px;
+    font-weight: bold;
+    padding: 15px 0;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: 0.2s ease-in-out;
+    width: 100%;
+}
+
+
+/* Content
+==================================================*/
+
+.site-content {
+    background-color: #e9e9e9;
+    margin-bottom: 20px;
+    padding: 20px 10px 0px;
+}
+
+.sidebar {
+    background: white;
+    border: 1px solid #dadada;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.sidebar header {
+    border-bottom: 2px solid #fd9527; /* orange */
+    margin: 0 -20px 20px;
+    padding: 0 20px;
+}
+
+.sidebar header h1 {
+    margin-bottom: 0;
+}
+
+.sidebar header p {
+    color: #999;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.sidebar p {
+    color: #777;
+}
+
+.thumbnail {
+    margin-bottom: 20px;
+}
+
+.thumbnail img {
+    margin-bottom: 10px;
+    max-width: 100%;
+}
+
+.thumbnail h2 {
+    margin-bottom: 0;
+}
+
+.thumbnail time {
+    color: #777;
+    font-style: italic;
+}
+
+
+/* Footer
+==================================================*/
+
+.site-footer {
+    color: #8797ae; /* light navy blue */
+    margin-bottom: 20px;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.site-footer ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.site-footer li {
+    display: inline-block;
+}
+
+
+/* Responsive Styles
+==================================================*/
+
+/* Two-Column Gallery */
+@media (min-width: 600px) {
+    .site-logo {
+        float: left;
+        margin: 0;
+    }
+
+    .header-contact {
+        display: block;
+    }
+
+    .site-content {
+        padding: 20px 20px 60px;
+    }
+
+    .thumbnail {
+        border: 10px solid #e9e9e9;
+        border-top: none;
+        float: left;
+        width: 50%;
+    }
+
+    .site-footer {
+        text-align: left;
+    }
+
+    .site-footer p {
+        float: left;
+        width: 75%;
+    }
+
+    .site-footer ul {
+        text-align: right;
+        float: left;
+        width: 25%;
+    }
+}
+
+/* These styles apply only within a range, so the
+   larger media queries don't inherit the rules.
+   This way, we don't have to manually unset our
+   .thumbnail:nth-of-type() selectors. */
+@media (min-width: 600px) and (max-width: 999px) {
+    .thumbnail:nth-of-type(2n+1) {
+        clear: left;
+        /* Forces each new row of thumbnails to
+           start alongside the left gutter. */
+    }
+}
+
+/* Layout, Three-Column Gallery */
+@media (min-width: 1000px) {
+    .site-header {
+        margin-bottom: 0;
+    }
+
+    .site-header button {
+        display: none;
+    }
+
+    .site-header nav {
+        clear: both;
+    }
+
+    .site-header nav ul {
+        display: block;
+    }
+
+    .site-header nav a {
+        background-color: #f5f5f5;
+        color: #999;
+        border: none;
+        display: block;
+        float: left;
+        font-size: 24px;
+        font-weight: normal;
+        padding: 20px 0;
+        transition: 0.2s ease-in-out;
+        width: 16.666666%;
+    }
+
+    .site-header nav a:hover {
+        background-color: #fd9527; /* orange */
+        color: white;
+    }
+
+    .nav-list.is-hidden {
+        display: block;
+    }
+
+    .site-content {
+        padding-left: 20px;
+    }
+
+    .sidebar {
+        float: left;
+        width: 33.333333%;
+    }
+
+    .gallery {
+        float: left;
+        padding-left: 10px;
+        width: 66.666666%;
+    }
+
+    .thumbnail {
+        width: 33.333333%;
+    }
+}
+
+@media (min-width: 1000px) and (max-width: 1399px) {
+    .thumbnail:nth-of-type(3n+1) {
+        clear: left;
+    }
+}
+
+/* Smaller Sidebar, Four-Column Gallery */
+@media (min-width: 1400px) {
+    .sidebar {
+        width: 25%;
+    }
+
+    .gallery {
+        width: 75%;
+    }
+
+    .thumbnail {
+        width: 25%;
+    }
+
+    .thumbnail:nth-of-type(4n+1) {
+        clear: left;
+    }
+}
