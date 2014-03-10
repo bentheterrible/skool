@@ -34,6 +34,9 @@ public class Multiplication {
 			// Read in the binary number.
 			binNum = in.next(); 
 			System.out.println(binNum);
+			char a = binNum.charAt(3);
+			int b = a-48;
+			System.out.println(b);
 			
 			System.out.println("---- Second Binary Number ----");
 			// Read in length of the second binary number and initialize length of array.
@@ -44,6 +47,9 @@ public class Multiplication {
 			binNum = in.next(); 
 			System.out.println(binNum);
 		
+			a = binNum.charAt(3);	
+			b = a-48;
+			System.out.println(b);
 		}
 	} // end main
 
