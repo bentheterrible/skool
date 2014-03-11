@@ -74,6 +74,8 @@ public class Multiplication {
 		int[][] num_to_add = new int[len2][n];
 		int[] binary1 = new int[len1];
 		int[] binary2 = new int[len2];
+		int[] carry = new int[n];
+		int[] result = new int[n];
 
 		binary1 = reverseArray(bin1);
 		binary2 = reverseArray(bin2);
@@ -84,15 +86,21 @@ public class Multiplication {
 			}
 		}
 
-		for (i = 0; i < len2; i++) {
-			for (j = 0; j < n; j++) {
-				System.out.print(num_to_add[i][j]);
+		for (i = 0; i < n; i++) {
+			for (j = 0; j < len2; j++) {
+				result[i] += num_to_add[j][i];
 			}
-			System.out.println();
 		}
+		
+		System.out.println("------------ Results --------------");
 
+		// Reverse the results back to proper direction.
+		result = reverseArray(result);	
+		printArray(result);
 
 		System.out.println();
+
+		return;
 
 	}
 
