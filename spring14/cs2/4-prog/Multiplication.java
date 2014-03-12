@@ -38,7 +38,7 @@ public class Multiplication {
 				for (j = 0; j < len1; j++) {
 					a = binNum.charAt(j);		// grabs a specific character in the string
 					b = a-48;					// converts that character into an integer
-					bin1[j] = b;					// place each converters char->int in respective index
+					bin1[j] = b;				// place each converters char->int in respective index
 				}
 				
 				// Read in length of the second binary number and initialize length of array.
@@ -69,13 +69,15 @@ public class Multiplication {
 		} // end main
 
 	public static void multiply(int[] bin1, int[] bin2, int len1, int len2) {
-		int i, j = 0, temp,
-			n = 2 * (len2) - 1;
+		int i, len,
+			carry = 0,
+			j = 0, 
+			n = 2 * len2;
 		int[][] num_to_add = new int[len2][n];
 		int[] binary1 = new int[len1];
 		int[] binary2 = new int[len2];
-		int[] carry = new int[n];
 		int[] result = new int[n];
+		int[] array = new int[n];
 
 		binary1 = reverseArray(bin1);
 		binary2 = reverseArray(bin2);
@@ -84,6 +86,13 @@ public class Multiplication {
 			for (j = 0; j < len1; j++) {
 				num_to_add[i][i+j] = binary1[j] * binary2[i];
 			}
+		}
+		
+		for (i = 0; i < len2; i++) {
+			for (j = 0; j < n; j++) {
+				System.out.print(num_to_add[i][j]);
+			}
+			System.out.println();
 		}
 
 		for (i = 0; i < n; i++) {
@@ -96,12 +105,24 @@ public class Multiplication {
 
 		// Reverse the results back to proper direction.
 		result = reverseArray(result);	
+
+		//// Debugging /////
+		for (i = 0; i < n; i++) 
+			array[i] = 8;
+
+		// Carry over all the numbers if any when adding binary numbers.
+		len = (result.length) - 1;
+		for (i = len; i >= 0; i--) {
+			array[i] = (carry + result[i]) % 2;	
+			carry = (carry + result[i]) / 2;
+		}
+		
+
+		System.out.print("result: ");
 		printArray(result);
-
+		System.out.print("array: ");
+		printArray(array);
 		System.out.println();
-
-		return;
-
 	}
 
 	public static int[] reverseArray(int[] array) {
