@@ -88,27 +88,15 @@ public class Multiplication {
 			}
 		}
 		
-		for (i = 0; i < len2; i++) {
-			for (j = 0; j < n; j++) {
-				System.out.print(num_to_add[i][j]);
-			}
-			System.out.println();
-		}
-
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < len2; j++) {
 				result[i] += num_to_add[j][i];
 			}
 		}
 		
-		System.out.println("------------ Results --------------");
 
 		// Reverse the results back to proper direction.
 		result = reverseArray(result);	
-
-		//// Debugging /////
-		for (i = 0; i < n; i++) 
-			array[i] = 8;
 
 		// Carry over all the numbers if any when adding binary numbers.
 		len = (result.length) - 1;
@@ -117,12 +105,30 @@ public class Multiplication {
 			carry = (carry + result[i]) / 2;
 		}
 		
-
-		System.out.print("result: ");
-		printArray(result);
-		System.out.print("array: ");
-		printArray(array);
-		System.out.println();
+		array = reverseArray(array);	
+	
+		// Trim the leading zeros, if any.	
+		len = array.length;
+		for (i = len-1; i >= 0; i--) {
+			if (array[i] == 0) {
+				len--;
+			}
+			else
+				break;
+		}
+		
+		// Transfer trimmed array into a new one.	
+		int[] finished = new int[len];
+		for (i = 0; i < len; i++) {
+			finished[i] = array[i];
+		}
+	
+		// Reverse the finished array to correct direction.
+		finished = reverseArray(finished);
+			
+		// Print the results of the finished multiplication
+		// of two binary numbers.
+		printArray(finished);
 	}
 
 	public static int[] reverseArray(int[] array) {
