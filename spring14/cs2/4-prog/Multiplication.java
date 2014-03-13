@@ -16,7 +16,7 @@ public class Multiplication {
 		
 		int i, j, k, len1, len2, b;
 		char a;
-		String binNum;
+		String binNum1, binNum2;
 
 		// Read in the file.
 		Scanner in = new Scanner( new File("mult.txt") );
@@ -32,11 +32,11 @@ public class Multiplication {
 				int[] bin1 = new int[len1];
 
 				// Read in the binary number as a String.
-				binNum = in.next(); 
+				binNum1 = in.next(); 
 				
 				// Convert the binary number from a String to an int array.
 				for (j = 0; j < len1; j++) {
-					a = binNum.charAt(j);		// grabs a specific character in the string
+					a = binNum1.charAt(j);		// grabs a specific character in the string
 					b = a-48;					// converts that character into an integer
 					bin1[j] = b;				// place each converters char->int in respective index
 				}
@@ -46,11 +46,11 @@ public class Multiplication {
 				int[] bin2 = new int[len2];
 
 				// Read in the binary number.
-				binNum = in.next(); 
+				binNum2 = in.next(); 
 				
 				// Convert the binary number from a String to an int array.
 				for (j = 0; j < len2; j++) {
-					a = binNum.charAt(j);		// grabs a specific character in the string
+					a = binNum2.charAt(j);		// grabs a specific character in the string
 					b = a-48;					// converts that character into an integer
 					bin2[j] = b;				// place each converters char->int in respective index
 				}
@@ -60,15 +60,15 @@ public class Multiplication {
 				//////////////// 
 				
 				// Standard Multiplication Algorithm.
-				multiply(bin1, bin2, len1, len2);
+				printArray( multiply(bin1, bin2, len1, len2) );
 				
 				// Karatsuba's divide and conquer algorithm.
-				//printArray( karatsuba(bin1, bin2, len1, len2) );
+				//karatsuba(binNum1, binNum2);
 				
 			} // end main for-loop
 		} // end main
 
-	public static void multiply(int[] bin1, int[] bin2, int len1, int len2) {
+	public static int[] multiply(int[] bin1, int[] bin2, int len1, int len2) {
 		int i, len,
 			carry = 0,
 			j = 0, 
@@ -93,7 +93,6 @@ public class Multiplication {
 				result[i] += num_to_add[j][i];
 			}
 		}
-		
 
 		// Reverse the results back to proper direction.
 		result = reverseArray(result);	
@@ -128,7 +127,7 @@ public class Multiplication {
 			
 		// Print the results of the finished multiplication
 		// of two binary numbers.
-		printArray(finished);
+		return finished;
 	}
 
 	public static int[] reverseArray(int[] array) {
@@ -142,9 +141,22 @@ public class Multiplication {
 
 		return array;
 	}
-
 	
-	public static void karatsuba(int[] bin1, int[] bin2, int len1, int len2) {
+	public static void karatsuba(String n, String m) {
+		int i;
+		int len1 = n.length();
+		int len2 = m.length();
+		int nextBinSize = findNextBinSize(n,m);
+		
+		for (i = 0; i < (nextBinSize - len1); i++) {
+			n = "0" + n;
+		}	
+
+		for (i = 0; i < (nextBinSize - len2); i++) {
+			m = "0" + m;
+		}	
+		
+		
 	}
 
 	public static void printArray(int[] arr) {
@@ -155,6 +167,29 @@ public class Multiplication {
 			System.out.print(arr[i]);
 		System.out.println();
 
+	}
+
+	public static int powOfTwo(int n) {
+		int i, x = 1;
+
+		for (i = 0; i < n; i++) {
+			x *= 2;
+		}
+
+		return x;
+	}
+	
+	public static int findNextBinSize(String n, String m) {
+		int len1 = n.length();
+		int len2 = m.length();
+		int max = Math.max(len1,len2);
+		int i = 1;
+
+		while (powOfTwo(i) < max) {
+			i++;
+		}	
+
+		return powOfTwo(i);
 	}
 
 } // end Multiplication class
