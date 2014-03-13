@@ -14,8 +14,7 @@ public class Multiplication {
 	
 	public static void main(String args[]) throws IOException {
 		
-		int i, j, k, len1, len2, b;
-		char a;
+		int i, k, len1, len2;
 		String binNum1, binNum2;
 
 		// Read in the file.
@@ -29,38 +28,22 @@ public class Multiplication {
 
 				// Read in length of the first binary number and initialize length of array.
 				len1 = in.nextInt();
-				int[] bin1 = new int[len1];
 
-				// Read in the binary number as a String.
+				// Read in the first binary number as a String.
 				binNum1 = in.next(); 
-				
-				// Convert the binary number from a String to an int array.
-				for (j = 0; j < len1; j++) {
-					a = binNum1.charAt(j);		// grabs a specific character in the string
-					b = a-48;					// converts that character into an integer
-					bin1[j] = b;				// place each converters char->int in respective index
-				}
 				
 				// Read in length of the second binary number and initialize length of array.
 				len2 = in.nextInt();
-				int[] bin2 = new int[len2];
 
-				// Read in the binary number.
+				// Read in the second binary number as a String.
 				binNum2 = in.next(); 
-				
-				// Convert the binary number from a String to an int array.
-				for (j = 0; j < len2; j++) {
-					a = binNum2.charAt(j);		// grabs a specific character in the string
-					b = a-48;					// converts that character into an integer
-					bin2[j] = b;				// place each converters char->int in respective index
-				}
 
 				//////////////// 
 				// Algorithms //
 				//////////////// 
 				
 				// Standard Multiplication Algorithm.
-				printArray( multiply(bin1, bin2, len1, len2) );
+				printArray( multiply(binNum1, binNum2) );
 				
 				// Karatsuba's divide and conquer algorithm.
 				//karatsuba(binNum1, binNum2);
@@ -68,7 +51,23 @@ public class Multiplication {
 			} // end main for-loop
 		} // end main
 
-	public static int[] multiply(int[] bin1, int[] bin2, int len1, int len2) {
+	public static int[] stringToArray(String s) {
+		int b, j, len = s.length();
+		int[] array = new int[len];
+		char a;	
+
+		// Convert the binary number from a String to an int array.
+		for (j = 0; j < len; j++) {
+			a = s.charAt(j);			// grabs a specific character in the string
+			b = a-48;					// converts that character into an integer
+			array[j] = b;				// place each converters char->int in respective index
+		}
+		return array;
+	}
+
+	public static int[] multiply(String bin1, String bin2) {
+		int len1 = bin1.length(),
+			len2 = bin2.length();
 		int i, len,
 			carry = 0,
 			j = 0, 
@@ -78,9 +77,13 @@ public class Multiplication {
 		int[] binary2 = new int[len2];
 		int[] result = new int[n];
 		int[] array = new int[n];
+		
+		// Convert String to Integer array.
+		binary1 = stringToArray(bin1); 
+		binary2 = stringToArray(bin2); 
 
-		binary1 = reverseArray(bin1);
-		binary2 = reverseArray(bin2);
+		binary1 = reverseArray(binary1);
+		binary2 = reverseArray(binary2);
 
 		for (i = 0; i < len2; i++) {
 			for (j = 0; j < len1; j++) {
@@ -143,11 +146,12 @@ public class Multiplication {
 	}
 	
 	public static void karatsuba(String n, String m) {
-		int i;
+		int i, len;
 		int len1 = n.length();
 		int len2 = m.length();
 		int nextBinSize = findNextBinSize(n,m);
 		
+		// Add Padding to both strings.	
 		for (i = 0; i < (nextBinSize - len1); i++) {
 			n = "0" + n;
 		}	
@@ -156,7 +160,9 @@ public class Multiplication {
 			m = "0" + m;
 		}	
 		
-		
+		// Get new length of string for splitting.	
+		len = n.length();
+
 	}
 
 	public static void printArray(int[] arr) {
