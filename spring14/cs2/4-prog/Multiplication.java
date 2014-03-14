@@ -18,7 +18,7 @@ public class Multiplication {
 		String binNum1, binNum2;
 
 		// Read in the file.
-		Scanner in = new Scanner( new File("test.txt") );
+		Scanner in = new Scanner( new File("mult.txt") );
 		
 			// Number of multiplications.
 			k = in.nextInt();
@@ -37,7 +37,7 @@ public class Multiplication {
 				//////////////// 
 				
 				// Standard Multiplication Algorithm.
-				//printArray( multiply(binNum1, binNum2) );
+				//System.out.println(multiply(binNum1, binNum2));
 					
 				len1 = binNum1.length();
 				len2 = binNum2.length();
@@ -53,10 +53,74 @@ public class Multiplication {
 				}	
 
 				// Karastuba Algorithm
-				karatsuba(binNum1, binNum2);
+				//karatsuba(binNum1, binNum2);
 
 			} // end main for-loop
+			
+			twosComp("0101");
+
 		} // end main
+
+	public static void twosComp(String s) {
+		int i, len = s.length();
+		int[] array = new int[len];	
+		int[] result = new int[len];	
+		String string; 
+		String one = "1";		
+		
+		// Convert the string to int array.
+		array = stringToArray(s);	
+
+		printArray(array);
+		
+		// Flip the bits.
+		for (i = 0; i < len; i++) {
+			if (array[i] == 1) {
+				array[i] = 0;
+			}
+			else {
+				array[i] = 1;
+			}
+		}	
+		
+		printArray(array);
+
+		// Pad with zeros, so it is the same size.
+		len = array.length-1;	
+		for (i = 0; i < len; i++) {
+			one = "0" + one;
+		}
+		
+		String answer;
+		answer = binAdd(arrayToString(array), one);
+		System.out.print("answer :");
+		System.out.println(unpad(answer));
+		
+	}
+
+	public static String unpad(String s) {
+		int i, len = s.length();
+		int[] a = new int[len];	
+		
+		a = reverseArray( stringToArray(s) );
+		
+		// Trim leading zeros, if any.
+		for (i = len-1; i >= 0; i--) {
+			if (a[i] == 0) {
+				len--;
+			}
+			else {
+				break;
+			}
+		}
+		
+		int[] b = new int[len];
+		for (i = 0; i < len; i++) {
+			b[i] = a[i];
+		}	
+
+		return arrayToString(b);	
+	}	
 
 	public static String arrayToString(int[] a) {
 		String s = ""; 
@@ -82,7 +146,7 @@ public class Multiplication {
 		return array;
 	}
 
-	public static int[] multiply(String bin1, String bin2) {
+	public static String multiply(String bin1, String bin2) {
 		int len1 = bin1.length(),
 			len2 = bin2.length();
 		int i, len,
@@ -146,10 +210,10 @@ public class Multiplication {
 	
 		// Reverse the finished array to correct direction.
 		finished = reverseArray(finished);
-			
+
 		// Print the results of the finished multiplication
 		// of two binary numbers.
-		return finished;
+		return arrayToString(finished);
 	}
 	
 	public static int[] reverseArray(int[] array) {
@@ -165,7 +229,7 @@ public class Multiplication {
 	}
 
 	// Post condition: the string are the same size.
-	public static int[] binAdd(String a, String b) {
+	public static String binAdd(String a, String b) {
 		int i, j;
 		int len = a.length(); 
 		int[] arrA = new int[len];
@@ -196,7 +260,7 @@ public class Multiplication {
 		// Reverse result to correct direction.
 		array = reverseArray(array);
 
-		return array;		
+		return arrayToString(array);		
 	}
 
 	// c = c2 * 2^n + c1 * 2^(n/2) + c0,
@@ -204,32 +268,21 @@ public class Multiplication {
 	// and c1 = (a1 + a0) * (b1 + b0) - (c2 + c0).	
 	public static void karatsuba(String a, String b) {
 		int i, len = a.length();
-		int[] c2 = new int[len/2];
-		int[] c0 = new int[len/2];
-		int[] c1 = new int[len];
-		String a0, a1, b0, b1;
+		String a0, a1, b0, b1, c0, c1, c2;
 
 		if (len == 1);
 			//return multiply(a,b);		
 			
-		System.out.println(a.length()/2-1);
 		// Split the binary numbers in half.
 		a1 = a.substring(0, len/2);
 		a0 = a.substring(len/2, len);
 		b1 = b.substring(0, len/2);
 		b0 = b.substring(len/2, len);
-				
-		System.out.print("a1: ");
-		System.out.println(a1);
-		System.out.print("a0: ");
-		System.out.println(a0);
-		System.out.print("b1: ");
-		System.out.println(b1);
-		System.out.print("b0: ");
-		System.out.println(b0);
 		
-		//c2 = multiply(a1,b1);	
-		//c0 = multiply(a0,b0);	
+		c2 = multiply(a1,b1);	
+		c0 = multiply(a0,b0);
+		System.out.println(multiply(binAdd(a1,a0), binAdd(b1,b0)));
+
 	}
 
 	public static void printArray(int[] arr) {
