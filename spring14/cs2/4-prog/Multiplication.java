@@ -52,6 +52,9 @@ public class Multiplication {
 					binNum2 = "0" + binNum2;
 				}	
 
+				// Karastuba Algorithm
+				karatsuba(binNum1, binNum2);
+
 			} // end main for-loop
 		} // end main
 
@@ -204,26 +207,29 @@ public class Multiplication {
 		int[] c2 = new int[len/2];
 		int[] c0 = new int[len/2];
 		int[] c1 = new int[len];
+		String a0, a1, b0, b1;
 
 		if (len == 1);
 			//return multiply(a,b);		
-		
-	// fix this -------------------------------------------****	
+			
+		System.out.println(a.length()/2-1);
 		// Split the binary numbers in half.
-		for (i = 0; i < len/2; i++) {
-			a1 = a1.concat( String.valueOf( a.charAt(i) ) );
-			b1 = b1 + b.charAt(i);
-		}
+		a1 = a.substring(0, len/2);
+		a0 = a.substring(len/2, len);
+		b1 = b.substring(0, len/2);
+		b0 = b.substring(len/2, len);
+				
+		System.out.print("a1: ");
 		System.out.println(a1);
+		System.out.print("a0: ");
+		System.out.println(a0);
+		System.out.print("b1: ");
+		System.out.println(b1);
+		System.out.print("b0: ");
+		System.out.println(b0);
 		
-		for (i = len/2; i < len; i++) {
-			a0 = a0 + a.charAt(i);	
-			b0 = b0 + b.charAt(i);
-		}
-		
-		System.out.print(a0);
-		c2 = multiply(a1,b1);	
-		c0 = multiply(a0,b0);	
+		//c2 = multiply(a1,b1);	
+		//c0 = multiply(a0,b0);	
 	}
 
 	public static void printArray(int[] arr) {

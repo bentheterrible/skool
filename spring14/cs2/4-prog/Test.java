@@ -5,20 +5,13 @@ import java.util.*;
 public class Test {
 	
 	public static void main(String args[]) throws IOException {
-		String n = "11111";
+		String n = "1234";
 		String m = "11";
-		int i;
-		int len1 = n.length();
-		int len2 = m.length();
-		int nextBinSize = findNextBinSize(n,m);
-		
-		for (i = 0; i < (nextBinSize - len1); i++) {
-			n = "0" + n;
-		}	
+		String a, b;
 
-		for (i = 0; i < (nextBinSize - len2); i++) {
-			m = "0" + m;
-		}	
+		a = n.substring(0,2);
+		System.out.print("test "
+		System.out.println(a);
 	}
 
 	public static int powOfTwo(int n) {
