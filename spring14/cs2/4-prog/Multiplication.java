@@ -52,24 +52,6 @@ public class Multiplication {
 					binNum2 = "0" + binNum2;
 				}	
 
-				// Karatsuba's divide and conquer algorithm.
-				// karatsuba(binNum1, binNum2);
-				String a1 = "01", a0 = "11", b1 = "10", b0 = "01";
-				int[] hello = new int[3];
-				int[] meow = new int[3];
-
-				hello = binAdd(a1,a0);
-				meow = binAdd(b1,b0);
-			
-				System.out.print("a1 + a0 = ");
-				printArray(hello);
-				System.out.print("b1 + b0 = ");
-				printArray(meow);
-
-				System.out.print("mult: ");
-				printArray( multiply( arrayToString(hello), arrayToString(meow)));
-				
-
 			} // end main for-loop
 		} // end main
 
@@ -78,7 +60,7 @@ public class Multiplication {
 		int i, k, len = a.length;
 		for (i = 0; i < len; i++) {
 			k = a[i];
-			s = s + ""+ k;	
+			s = s + "" + k;	
 		}
 		return s;
 	}
@@ -222,25 +204,24 @@ public class Multiplication {
 		int[] c2 = new int[len/2];
 		int[] c0 = new int[len/2];
 		int[] c1 = new int[len];
-		String a0 = "",
-			   a1 = "",
-			   b0 = "",
-			   b1 = "";
 
 		if (len == 1);
 			//return multiply(a,b);		
 		
+	// fix this -------------------------------------------****	
 		// Split the binary numbers in half.
 		for (i = 0; i < len/2; i++) {
-			a1 = a1 + a.charAt(i);	
+			a1 = a1.concat( String.valueOf( a.charAt(i) ) );
 			b1 = b1 + b.charAt(i);
 		}
+		System.out.println(a1);
 		
 		for (i = len/2; i < len; i++) {
 			a0 = a0 + a.charAt(i);	
 			b0 = b0 + b.charAt(i);
 		}
 		
+		System.out.print(a0);
 		c2 = multiply(a1,b1);	
 		c0 = multiply(a0,b0);	
 	}
