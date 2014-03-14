@@ -14,28 +14,22 @@ public class Multiplication {
 	
 	public static void main(String args[]) throws IOException {
 		
-		int i, k, len1, len2;
+		int i, j, k, len1, len2;
 		String binNum1, binNum2;
 
 		// Read in the file.
-		Scanner in = new Scanner( new File("mult.txt") );
+		Scanner in = new Scanner( new File("test.txt") );
 		
 			// Number of multiplications.
 			k = in.nextInt();
 			
 			// Loop through the file.	
 			for (i = 0; i < k; i++) {
-
-				// Read in length of the first binary number and initialize length of array.
+			
+				// Read in inputs	
 				len1 = in.nextInt();
-
-				// Read in the first binary number as a String.
 				binNum1 = in.next(); 
-				
-				// Read in length of the second binary number and initialize length of array.
 				len2 = in.nextInt();
-
-				// Read in the second binary number as a String.
 				binNum2 = in.next(); 
 
 				//////////////// 
@@ -43,13 +37,51 @@ public class Multiplication {
 				//////////////// 
 				
 				// Standard Multiplication Algorithm.
-				printArray( multiply(binNum1, binNum2) );
-				
+				//printArray( multiply(binNum1, binNum2) );
+					
+				len1 = binNum1.length();
+				len2 = binNum2.length();
+				int nextBinSize = findNextBinSize(binNum1,binNum2);
+		
+				// Add Padding to both strings.	
+				for (j = 0; j < (nextBinSize - len1); j++) {
+					binNum1 = "0" + binNum1;
+				}	
+
+				for (j = 0; j < (nextBinSize - len2); j++) {
+					binNum2 = "0" + binNum2;
+				}	
+
 				// Karatsuba's divide and conquer algorithm.
-				//karatsuba(binNum1, binNum2);
+				// karatsuba(binNum1, binNum2);
+				String a1 = "01", a0 = "11", b1 = "10", b0 = "01";
+				int[] hello = new int[3];
+				int[] meow = new int[3];
+
+				hello = binAdd(a1,a0);
+				meow = binAdd(b1,b0);
+			
+				System.out.print("a1 + a0 = ");
+				printArray(hello);
+				System.out.print("b1 + b0 = ");
+				printArray(meow);
+
+				System.out.print("mult: ");
+				printArray( multiply( arrayToString(hello), arrayToString(meow)));
 				
+
 			} // end main for-loop
 		} // end main
+
+	public static String arrayToString(int[] a) {
+		String s = ""; 
+		int i, k, len = a.length;
+		for (i = 0; i < len; i++) {
+			k = a[i];
+			s = s + ""+ k;	
+		}
+		return s;
+	}
 
 	public static int[] stringToArray(String s) {
 		int b, j, len = s.length();
@@ -72,7 +104,7 @@ public class Multiplication {
 			carry = 0,
 			j = 0, 
 			n = 2 * len2;
-		int[][] num_to_add = new int[len2][n];
+		int[][] addMat = new int[len2][n];
 		int[] binary1 = new int[len1];
 		int[] binary2 = new int[len2];
 		int[] result = new int[n];
@@ -85,15 +117,17 @@ public class Multiplication {
 		binary1 = reverseArray(binary1);
 		binary2 = reverseArray(binary2);
 
+		// Populate the add matrix.	
 		for (i = 0; i < len2; i++) {
 			for (j = 0; j < len1; j++) {
-				num_to_add[i][i+j] = binary1[j] * binary2[i];
+				addMat[i][i+j] = binary1[j] * binary2[i];
 			}
 		}
 		
+		// Add up the results.	
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < len2; j++) {
-				result[i] += num_to_add[j][i];
+				result[i] += addMat[j][i];
 			}
 		}
 
@@ -106,7 +140,7 @@ public class Multiplication {
 			array[i] = (carry + result[i]) % 2;	
 			carry = (carry + result[i]) / 2;
 		}
-		
+
 		array = reverseArray(array);	
 	
 		// Trim the leading zeros, if any.	
@@ -132,7 +166,7 @@ public class Multiplication {
 		// of two binary numbers.
 		return finished;
 	}
-
+	
 	public static int[] reverseArray(int[] array) {
 		int i, temp;
 		
@@ -144,25 +178,71 @@ public class Multiplication {
 
 		return array;
 	}
+
+	// Post condition: the string are the same size.
+	public static int[] binAdd(String a, String b) {
+		int i, j;
+		int len = a.length(); 
+		int[] arrA = new int[len];
+		int[] arrB = new int[len];
+		int[] result = new int[2*len];	
+
+		// Converts binary numbers to int arrays.
+		arrA = stringToArray(a);
+		arrB = stringToArray(b);
+		
+		// Reverse array in preparation for looping 
+		// and adding the binary numbers together.	
+		arrA = reverseArray(arrA);
+		arrB = reverseArray(arrB);
+		
+		// Add the binary numbers
+		for (i = 0; i < len; i++) {
+			result[i] = arrA[i] + arrB[i];
+		}
 	
-	public static void karatsuba(String n, String m) {
-		int i, len;
-		int len1 = n.length();
-		int len2 = m.length();
-		int nextBinSize = findNextBinSize(n,m);
-		
-		// Add Padding to both strings.	
-		for (i = 0; i < (nextBinSize - len1); i++) {
-			n = "0" + n;
-		}	
+		int carry = 0;	
+		len = result.length;
+		int[] array = new int[len];
+		for (i = 0; i < len; i++) {
+			array[i] = (carry + result[i]) % 2;
+			carry = (carry + result[i])	/ 2;
+		}
+		// Reverse result to correct direction.
+		array = reverseArray(array);
 
-		for (i = 0; i < (nextBinSize - len2); i++) {
-			m = "0" + m;
-		}	
-		
-		// Get new length of string for splitting.	
-		len = n.length();
+		return array;		
+	}
 
+	// c = c2 * 2^n + c1 * 2^(n/2) + c0,
+	// where c2 = a1 * b1, c0 = a0 * b0,
+	// and c1 = (a1 + a0) * (b1 + b0) - (c2 + c0).	
+	public static void karatsuba(String a, String b) {
+		int i, len = a.length();
+		int[] c2 = new int[len/2];
+		int[] c0 = new int[len/2];
+		int[] c1 = new int[len];
+		String a0 = "",
+			   a1 = "",
+			   b0 = "",
+			   b1 = "";
+
+		if (len == 1);
+			//return multiply(a,b);		
+		
+		// Split the binary numbers in half.
+		for (i = 0; i < len/2; i++) {
+			a1 = a1 + a.charAt(i);	
+			b1 = b1 + b.charAt(i);
+		}
+		
+		for (i = len/2; i < len; i++) {
+			a0 = a0 + a.charAt(i);	
+			b0 = b0 + b.charAt(i);
+		}
+		
+		c2 = multiply(a1,b1);	
+		c0 = multiply(a0,b0);	
 	}
 
 	public static void printArray(int[] arr) {
