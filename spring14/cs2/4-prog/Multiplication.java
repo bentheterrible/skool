@@ -57,11 +57,12 @@ public class Multiplication {
 
 			} // end main for-loop
 			
-			twosComp("0101");
+			//System.out.print("test twos com of 0101 = ");
+			System.out.println(twosComp("0101"));
+			
+			} // end main
 
-		} // end main
-
-	public static void twosComp(String s) {
+		public static String twosComp(String s) {
 		int i, len = s.length();
 		int[] array = new int[len];	
 		int[] result = new int[len];	
@@ -71,8 +72,6 @@ public class Multiplication {
 		// Convert the string to int array.
 		array = stringToArray(s);	
 
-		printArray(array);
-		
 		// Flip the bits.
 		for (i = 0; i < len; i++) {
 			if (array[i] == 1) {
@@ -83,19 +82,30 @@ public class Multiplication {
 			}
 		}	
 		
-		printArray(array);
-
 		// Pad with zeros, so it is the same size.
 		len = array.length-1;	
 		for (i = 0; i < len; i++) {
 			one = "0" + one;
 		}
-		
+			
 		String answer;
+
 		answer = binAdd(arrayToString(array), one);
-		System.out.print("answer :");
-		System.out.println(unpad(answer));
-		
+		answer = unpad(answer);	
+			
+		return reverseString(answer);
+	}
+
+	public static String reverseString(String s) {
+		int i, len = s.length();
+		char[] temp = new char[len];	
+
+		for (i = 0; i < len/2; i++) {
+			temp[i] = s.charAt(s.length()-1-i);
+			temp[s.length()-1-i] = s.charAt(i);
+		}
+
+		return String.valueOf(temp);
 	}
 
 	public static String unpad(String s) {
