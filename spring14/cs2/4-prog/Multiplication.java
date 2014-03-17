@@ -15,7 +15,8 @@ public class Multiplication {
 	public static void main(String args[]) throws IOException {
 		
 		int i, j, k, len1, len2;
-		String binNum1, binNum2;
+		String bin1, bin2;
+
 
 		// Read in the file.
 		Scanner in = new Scanner( new File("mult.txt") );
@@ -28,72 +29,52 @@ public class Multiplication {
 			
 				// Read in inputs	
 				len1 = in.nextInt();
-				binNum1 = in.next(); 
+				bin1 = in.next(); 
 				len2 = in.nextInt();
-				binNum2 = in.next(); 
+				bin2 = in.next(); 
 
 				//////////////// 
 				// Algorithms //
 				//////////////// 
 				
 				// Standard Multiplication Algorithm.
-				//System.out.println(multiply(binNum1, binNum2));
+				System.out.println(multiply(bin1, bin2));
 					
-				len1 = binNum1.length();
-				len2 = binNum2.length();
-				int nextBinSize = findNextBinSize(binNum1,binNum2);
-		
-				// Add Padding to both strings.	
-				for (j = 0; j < (nextBinSize - len1); j++) {
-					binNum1 = "0" + binNum1;
-				}	
-
-				for (j = 0; j < (nextBinSize - len2); j++) {
-					binNum2 = "0" + binNum2;
-				}	
-
+				len1 = bin1.length();
+				len2 = bin2.length();
+				int nextBinSize = findNextBinSize(bin1,bin2);
+				
 				// Karastuba Algorithm
-				//karatsuba(binNum1, binNum2);
-
+				//karatsuba(bin1, bin2);
+				
 			} // end main for-loop
 			
-			//System.out.print("test twos com of 0101 = ");
-			System.out.println(twosComp("0101"));
+		} // end main
+		
+		public static String bitFlip(String s) {
+			int i;
+			int[] array = new int[s.length()];
 			
-			} // end main
+			array = stringToArray(s);	
 
-		public static String twosComp(String s) {
-		int i, len = s.length();
-		int[] array = new int[len];	
-		int[] result = new int[len];	
-		String string; 
-		String one = "1";		
-		
-		// Convert the string to int array.
-		array = stringToArray(s);	
+			for (i = 0; i < s.length(); i++) {
+				if (array[i] == 1) {
+					array[i] = 0;
+				}
+				else {
+					array[i] = 1;
+				}
+			}
 
-		// Flip the bits.
-		for (i = 0; i < len; i++) {
-			if (array[i] == 1) {
-				array[i] = 0;
-			}
-			else {
-				array[i] = 1;
-			}
-		}	
-		
-		// Pad with zeros, so it is the same size.
-		len = array.length-1;	
-		for (i = 0; i < len; i++) {
-			one = "0" + one;
+			return new String(arrayToString(array));
 		}
-			
-		String answer;
 
-		answer = binAdd(arrayToString(array), one);
-		answer = unpad(answer);	
-			
-		return reverseString(answer);
+	public static String twosComp(String s) {
+		
+		// Flip the bits.
+		s = bitFlip(s);
+
+		return new String(s);
 	}
 
 	public static String reverseString(String s) {
@@ -129,7 +110,7 @@ public class Multiplication {
 			b[i] = a[i];
 		}	
 
-		return arrayToString(b);	
+		return new String(arrayToString(b));	
 	}	
 
 	public static String arrayToString(int[] a) {
@@ -139,7 +120,7 @@ public class Multiplication {
 			k = a[i];
 			s = s + "" + k;	
 		}
-		return s;
+		return new String(s);
 	}
 
 	public static int[] stringToArray(String s) {
@@ -155,6 +136,7 @@ public class Multiplication {
 		}
 		return array;
 	}
+
 
 	public static String multiply(String bin1, String bin2) {
 		int len1 = bin1.length(),
@@ -237,14 +219,52 @@ public class Multiplication {
 
 		return array;
 	}
+	
+	public static String makeSameSize(String s, int n) {
+		int i, len = s.length();
 
-	// Post condition: the string are the same size.
+		if (len >= n)
+			return new String(s);
+		for (i = 0; i < len; i++) {
+			s = "0" + s;
+		}
+
+		return new String(s);
+	}
+
+	public static char xor(char a, char b) {
+		if (a != b)
+			return '1';
+		else
+			return '0';
+	}
+	
+	public static char or(char a, char b) {
+		if (a == '1' || b == '1')
+			return '1';
+		else
+			return '0';
+	}
+
+	public static char and(char a, char b) {
+		if (a == '1' &&  b == '1')
+			return '1';
+		else
+			return '0';
+	}
+
 	public static String binAdd(String a, String b) {
 		int i, j;
 		int len = a.length(); 
+		
+		// Make sure the string are the
+		// same size before adding them 
+		a = makeSameSize(a, b.length());	
+		b = makeSameSize(b, a.length());	
+
 		int[] arrA = new int[len];
 		int[] arrB = new int[len];
-		int[] result = new int[2*len];	
+		int[] result = new int[len];	
 
 		// Converts binary numbers to int arrays.
 		arrA = stringToArray(a);
@@ -270,29 +290,44 @@ public class Multiplication {
 		// Reverse result to correct direction.
 		array = reverseArray(array);
 
-		return arrayToString(array);		
+		return new String(arrayToString(array));		
 	}
 
-	// c = c2 * 2^n + c1 * 2^(n/2) + c0,
-	// where c2 = a1 * b1, c0 = a0 * b0,
-	// and c1 = (a1 + a0) * (b1 + b0) - (c2 + c0).	
-	public static void karatsuba(String a, String b) {
-		int i, len = a.length();
-		String a0, a1, b0, b1, c0, c1, c2;
+	public static String shiftLeft(String s, int n) {
+		String str = new String(s);
+		int i;
 
-		if (len == 1);
-			//return multiply(a,b);		
+		for (i = 0; i < n; i++) {
+			str = str.concat("0");
+		}	
+
+		return new String(str);
+
+	}
+
+	public static void karatsuba(String bin1, String bin2) {
+		int i, len = bin1.length();
+		int m, m2;
+		String high1, high2, low1, low2;
+
+		if (len == 2);
+			//return multiply(bin1,bin2);		
+		
+		m = Math.max(bin1.length(), bin2.length());
+		m2 = m/2;
 			
 		// Split the binary numbers in half.
-		a1 = a.substring(0, len/2);
-		a0 = a.substring(len/2, len);
-		b1 = b.substring(0, len/2);
-		b0 = b.substring(len/2, len);
-		
-		c2 = multiply(a1,b1);	
-		c0 = multiply(a0,b0);
-		System.out.println(multiply(binAdd(a1,a0), binAdd(b1,b0)));
+		high1 = bin1.substring(0, len/2);
+		low1 = bin1.substring(len/2, len);
+		high2 = bin2.substring(0, len/2);
+		low2 = bin2.substring(len/2, len);
 
+		String z0, z1, z2;
+		//z0 = karatsuba(low1,low2);
+		//z1 = karatsuba( (low1+high1), (low2+high2) );
+		//z2 = karatsuba(high1, high2);
+
+		//return binAdd( shiftLeft(z2,2*m2), binAdd( shiftLeft( subtract(z1,binAdd(z2,z0)),m2),z0) );
 	}
 
 	public static void printArray(int[] arr) {
