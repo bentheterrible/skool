@@ -21,7 +21,7 @@ public class Heap {
 		do {	
 			switch(in.next()) {
 				case "load":
-					load(in);
+					print_array(load(in));
 					break;
 				case "print":
 					print();
@@ -41,29 +41,52 @@ public class Heap {
 			}
 		} while(in.hasNext() == true);
 
-	} // end main	
+	} // end main
+
+
+	public static void print_array(int[] arr) {
+		int i, len;
+
+		len	= arr.length;
+		for (i = 0; i < len; i++)
+			System.out.print(arr[i]);
+		System.out.println();
+
+	}
 	
-	public static void load(Scanner in) {
-		System.out.println("Made it to load()");
+	// Converts an ArrayList to an primative int array (int[]).
+	public static int[] convert_list(ArrayList<Integer> list) {
+		int[] ret = new int[list.size()];
+
+		for (int i = 0; i < ret.length; i++) {
+			ret[i] = list.get(i).intValue();
+		}
+	
+		return ret;
+	}
+
+	public static int[] load(Scanner in) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+
+		do {	
+			list.add(in.nextInt());
+		} while (in.hasNextInt() == true);
+		
+		return convert_list(list);	
 	}
 
 	public static void print() {
-		System.out.println("Made it to print()");
 	}
 
 	public static void build_heap() {
-		System.out.println("Made it to build_heap()");
 	}
 	
 	public static void delete_max() {
-		System.out.println("Made it to delete_max()");
 	}
 	
 	public static void insert() {
-		System.out.println("Made it to insert()");
 	}
 	
 	public static void heapsort() {
-		System.out.println("Made it to heapsort()");
 	}
 } // end class
