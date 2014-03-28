@@ -11,9 +11,25 @@ import java.io.*;
 import java.util.*;
 
 public class Heap {
+	
+	// Variables //
+	private int[] array;
+	
+	// Constructors //	
+	public Heap() {
+	}
 
+	public Heap(int[] array) {
+		this.array = array;
+	}
+	
+	// Main Methods //
 	public static void main (String args[]) throws IOException  {
-		
+
+		// Create a Heap object.
+		Heap heap = new Heap(); 
+		//System.out.println(heap.test);
+
 		// Read in the file.
 		Scanner in = new Scanner( new File("heapops.txt") );
 		
@@ -21,30 +37,67 @@ public class Heap {
 		do {	
 			switch(in.next()) {
 				case "load":
-					print_array(load(in));
+					ArrayList<Integer> list = new ArrayList<Integer>(heap.load(in));
+					int[] array = new int[list.size()];
+
+					heap.array = heap.convert_list(list);
 					break;
 				case "print":
-					print();
+					heap.print_array(heap.array);
 					break;
 				case "build-heap":
-					build_heap();
+					heap.build_heap();
 					break;
 				case "delete-max":
-					delete_max();
+					heap.delete_max();
 					break;
 				case "insert":
-					insert();
+					heap.insert();
 					break;
 				case "heapsort":
-					heapsort();
+					heap.heapsort();
 					break;
 			}
 		} while(in.hasNext() == true);
-
 	} // end main
 
+	public ArrayList<Integer> load(Scanner in) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
 
-	public static void print_array(int[] arr) {
+		do {	
+			list.add(in.nextInt());
+		} while (in.hasNextInt() == true);
+		
+		return list;	
+	}
+
+	public void print(int[] array) {
+		if (array.length == 0) {
+			System.out.println("(emtpy)");
+		}
+		
+		print_array(array);
+	}
+
+	public void build_heap() {
+	}
+	
+	public void delete_max() {
+	}
+	
+	public void insert() {
+	}
+	
+	public void heapsort() {
+	}
+	
+
+
+	//////////////////////////////////		
+	// 		Helper Methods          //
+	//////////////////////////////////		
+
+	public void print_array(int[] arr) {
 		int i, len;
 
 		len	= arr.length;
@@ -55,38 +108,14 @@ public class Heap {
 	}
 	
 	// Converts an ArrayList to an primative int array (int[]).
-	public static int[] convert_list(ArrayList<Integer> list) {
+	public int[] convert_list(ArrayList<Integer> list) {
 		int[] ret = new int[list.size()];
 
 		for (int i = 0; i < ret.length; i++) {
 			ret[i] = list.get(i).intValue();
 		}
-	
-		return ret;
+
+	return ret;
 	}
 
-	public static int[] load(Scanner in) {
-		ArrayList<Integer> list = new ArrayList<Integer>();
-
-		do {	
-			list.add(in.nextInt());
-		} while (in.hasNextInt() == true);
-		
-		return convert_list(list);	
-	}
-
-	public static void print() {
-	}
-
-	public static void build_heap() {
-	}
-	
-	public static void delete_max() {
-	}
-	
-	public static void insert() {
-	}
-	
-	public static void heapsort() {
-	}
 } // end class
