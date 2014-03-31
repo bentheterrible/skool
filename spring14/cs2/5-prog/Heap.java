@@ -46,7 +46,7 @@ public class Heap {
 					heap.print_array(heap.array);
 					break;
 				case "build-heap":
-					heap.build_heap();
+					heap.build_heap(heap.array);
 					break;
 				case "delete-max":
 					heap.delete_max();
@@ -79,7 +79,34 @@ public class Heap {
 		print_array(array);
 	}
 
-	public void build_heap() {
+	public int[] build_heap(int[] array) {
+		int i, j, k, n = array.length;
+		int[] ret = new ret[n];	
+		boolean flag;
+		
+		for (i = n/2; i >= 1; i/=2) {
+			k = i;
+			ret = array;
+			flag = false;
+			
+			while (!flag && 2*k <= n) {
+				j = 2*k;
+
+				if (j < n) {
+					if (array[j] < array[j+1]) {
+						j++;
+					}
+				}
+
+				if (ret >= array[j]) {
+					flag = true;
+				}
+				else {
+					array[k] = array[j];
+					k = j;
+				}
+			}
+		}		
 	}
 	
 	public void delete_max() {
