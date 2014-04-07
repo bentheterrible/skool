@@ -31,7 +31,7 @@ public class Heap {
 		//System.out.println(heap.test);
 
 		// Read in the file.
-		Scanner in = new Scanner( new File("heapops.txt") );
+		Scanner in = new Scanner( new File("test.txt") );
 		
 		// Read through the file.
 		do {	
@@ -40,7 +40,7 @@ public class Heap {
 					ArrayList<Integer> list = new ArrayList<Integer>(heap.load(in));
 					int[] array = new int[list.size()];
 
-					heap.array = heap.convert_list(list);
+					heap.array = heap.convert_list(list); // converts array list to array
 					break;
 				case "print":
 					heap.print_array(heap.array);
@@ -80,33 +80,9 @@ public class Heap {
 	}
 
 	public int[] build_heap(int[] array) {
-		int i, j, k, n = array.length;
-		int[] ret = new ret[n];	
-		boolean flag;
+		int len = array.length;	
 		
-		for (i = n/2; i >= 1; i/=2) {
-			k = i;
-			ret = array;
-			flag = false;
-			
-			while (!flag && 2*k <= n) {
-				j = 2*k;
-
-				if (j < n) {
-					if (array[j] < array[j+1]) {
-						j++;
-					}
-				}
-
-				if (ret >= array[j]) {
-					flag = true;
-				}
-				else {
-					array[k] = array[j];
-					k = j;
-				}
-			}
-		}		
+		return array;
 	}
 	
 	public void delete_max() {
@@ -122,9 +98,30 @@ public class Heap {
 
 	//////////////////////////////////		
 	// 		Helper Methods          //
-	//////////////////////////////////		
+	//////////////////////////////////
+		
+	public static int get_parent(int[] array, int i) {
+		return array[(i-1)/2];
+	}
 
-	public void print_array(int[] arr) {
+	public static int get_lc(int[] array, int i) {
+		return array[2*i+1];
+	}
+
+	public static int get_rc(int[] array, int i) {
+		return array[2*i+2];
+	}
+
+	public static int[] swap(int[] array, int index1, int index2) {
+		int temp;
+		temp = array[index1];
+		array[index1] = array[index2];
+		array[index2] = temp;
+
+		return array;
+	}
+
+	public static void print_array(int[] arr) {
 		int i, len;
 
 		len	= arr.length;
