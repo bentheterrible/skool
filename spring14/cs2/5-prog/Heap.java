@@ -81,7 +81,7 @@ public class Heap {
 
 	public int[] build_heap() {
 		int n = this.array.length-1;	
-		for (int i = n/2; i >= 0; i--) {
+		for (int i = this.array.length/2; i > 0; i--) {
 			int k = i;
 			int v = this.array[k];
 			boolean heap = false;
@@ -153,13 +153,14 @@ public class Heap {
 		int i, len;
 
 		len	= arr.length;
-		for (i = 0; i < len; i++)
+		for (i = 1; i < len; i++)
 			System.out.print(arr[i]);
 		System.out.println();
 
 	}
 	
 	// Converts an ArrayList to an primative int array (int[]).
+	// And adds a dummy variable at the root.
 	public int[] convert_list(ArrayList<Integer> list) {
 		int[] ret = new int[list.size()];
 		int i;
