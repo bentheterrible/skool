@@ -1,2 +1,3 @@
-load 2 9 7 6 5 8
+load 2 9 7 6 5 8 
 print
+
