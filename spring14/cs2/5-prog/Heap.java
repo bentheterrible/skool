@@ -28,10 +28,9 @@ public class Heap {
 
 		// Create a Heap object.
 		Heap heap = new Heap(); 
-		//System.out.println(heap.test);
 
 		// Read in the file.
-		Scanner in = new Scanner( new File("test.txt") );
+		Scanner in = new Scanner( new File("heapops.txt") );
 		
 		// Read through the file.
 		do {	
@@ -43,7 +42,7 @@ public class Heap {
 					heap.array = heap.convert_list(list); // converts array list to array
 					break;
 				case "print":
-					heap.print_array(heap.array);
+					heap.print();
 					break;
 				case "build-heap":
 					heap.build_heap();
@@ -71,12 +70,18 @@ public class Heap {
 		return list;	
 	}
 
-	public void print(int[] array) {
-		if (array.length == 0) {
+	public void print() {
+		int i;
+
+		if (this.array.length == 1) {
 			System.out.println("(emtpy)");
+			return;
 		}
 		
-		print_array(array);
+		for (i = 1; i < this.array.length; i++) {
+			System.out.print(this.array[i] + " ");
+		}			
+		System.out.println();
 	}
 
 	public int[] build_heap() {
@@ -123,6 +128,16 @@ public class Heap {
 	}
 	
 	public void heapsort() {
+
+		while (this.array.length > 1) {
+			
+			// Print the current root
+			System.out.print(this.array[1] + " ");
+
+			// Delete the root
+			this.delete_max();
+		}
+		System.out.println();
 	}
 
 	//////////////////////////////////		
@@ -162,16 +177,6 @@ public class Heap {
 		return array;
 	}
 
-	public static void print_array(int[] arr) {
-		int i, len;
-
-		len	= arr.length;
-		for (i = 1; i < len; i++)
-			System.out.print(arr[i]);
-		System.out.println();
-
-	}
-	
 	// Converts an ArrayList to an primative int array (int[]).
 	// And adds a dummy variable at the root.
 	public int[] convert_list(ArrayList<Integer> list) {

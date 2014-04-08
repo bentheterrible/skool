@@ -5,3 +5,4 @@ print
 delete-max
 print
 insert 3 
+print
