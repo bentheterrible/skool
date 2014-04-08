@@ -102,6 +102,15 @@ public class Heap {
 	}
 	
 	public void delete_max() {
+
+		// swap the first and last elements of the heap
+		this.array = this.swap(1, this.array.length-1);
+
+		// delete the last node (former first)
+		this.array = Arrays.copyOf(this.array, this.array.length-1);
+
+		// heapify
+		this.build_heap();
 	}
 	
 	public void insert() {
@@ -109,8 +118,6 @@ public class Heap {
 	
 	public void heapsort() {
 	}
-	
-
 
 	//////////////////////////////////		
 	// 		Helper Methods          //
@@ -140,11 +147,11 @@ public class Heap {
 		return 2*i+2;
 	}
 
-	public static int[] swap(int[] array, int index1, int index2) {
+	public int[] swap(int i, int j) {
 		int temp;
-		temp = array[index1];
-		array[index1] = array[index2];
-		array[index2] = temp;
+		temp = this.array[i];
+		this.array[i] = array[j];
+		this.array[j] = temp;
 
 		return array;
 	}
