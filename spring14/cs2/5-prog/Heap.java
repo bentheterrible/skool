@@ -52,7 +52,7 @@ public class Heap {
 					heap.delete_max();
 					break;
 				case "insert":
-					heap.insert();
+					heap.insert(in.nextInt());
 					break;
 				case "heapsort":
 					heap.heapsort();
@@ -113,7 +113,13 @@ public class Heap {
 		this.build_heap();
 	}
 	
-	public void insert() {
+	public void insert(int n) {
+		
+		// Expand the size of the array to make room for new integer
+		this.array = Arrays.copyOf(this.array, this.array.length+1);
+		
+		// Insert the new integer into the heap
+		this.array[this.array.length-1] = n;	
 	}
 	
 	public void heapsort() {

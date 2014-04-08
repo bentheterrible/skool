@@ -4,3 +4,4 @@ build-heap
 print
 delete-max
 print
+insert 3 
