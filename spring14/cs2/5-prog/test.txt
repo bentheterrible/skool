@@ -1,8 +1,0 @@
-load 2 9 7 6 5 8 
-print
-build-heap
-print
-delete-max
-print
-insert 3 
-print

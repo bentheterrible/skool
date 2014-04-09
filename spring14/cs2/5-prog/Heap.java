@@ -125,6 +125,9 @@ public class Heap {
 		
 		// Insert the new integer into the heap
 		this.array[this.array.length-1] = n;	
+
+		// heapify
+		this.build_heap();
 	}
 	
 	public void heapsort() {
