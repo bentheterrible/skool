@@ -12,7 +12,8 @@ import java.util.*;
 
 public class Hopscotch {
 
-	public static void main (String args[]) throws IOException  {
+	public static void main(String args[]) throws IOException  {
+		System.out.println("hello world");
 	} // end main
 
 } // end class
