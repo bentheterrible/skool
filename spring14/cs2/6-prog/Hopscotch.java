@@ -13,7 +13,6 @@ import java.util.*;
 public class Hopscotch {
 
 	public static void main(String args[]) throws IOException  {
-		/*
 		// Read in the file.
 		Scanner in = new Scanner( new File("hopscotch.in") );
 
@@ -22,11 +21,6 @@ public class Hopscotch {
 		for (i = 0; i < var; i++) { 
 			 System.out.println( "Game #" + (i+1) + ": " +  score(in.nextInt()) );
 		}
-		*/
-		
-		int n = 13;
-
-		System.out.println(score(n));
 
 	} // end main
 
@@ -63,15 +57,15 @@ public class Hopscotch {
 	}
 
 	public static boolean isPrime(int n) {
-		int i, x = Math.ceil( Math.sqrt(n) );
+		int i, x = (int)Math.ceil( Math.sqrt(n) );
 		
-		for (i = 2; i < x; i++) {
+		for (i = 2; i <= x; i++) {
 			if (n%i == 0) {
-				return 0;
+				return false;
 			}
 		}
 
-		return 1;
+		return true;
 	}
 
 	public static int digisum(int n) {
