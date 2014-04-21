@@ -24,7 +24,7 @@ public class Hopscotch {
 		}
 		*/
 		
-		int n = 7;
+		int n = 13;
 
 		System.out.println(score(n));
 
@@ -63,7 +63,15 @@ public class Hopscotch {
 	}
 
 	public static boolean isPrime(int n) {
-		return true;	
+		int i, x = Math.ceil( Math.sqrt(n) );
+		
+		for (i = 2; i < x; i++) {
+			if (n%i == 0) {
+				return 0;
+			}
+		}
+
+		return 1;
 	}
 
 	public static int digisum(int n) {
