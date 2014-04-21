@@ -30,7 +30,7 @@ public class Heap {
 		Heap heap = new Heap(); 
 
 		// Read in the file.
-		Scanner in = new Scanner( new File("heapops.txt") );
+		Scanner in = new Scanner( new File("input.txt") );
 		
 		// Read through the file.
 		do {	
