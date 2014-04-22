@@ -31,7 +31,7 @@ public class Hopscotch {
 		arr[0] = 0;
 
 		for (i = 1; i <= n; i++) { 
-				
+					
 			temp = 1 + arr[i-1];
 		
 			if (i%7 == 0) {
@@ -51,9 +51,9 @@ public class Hopscotch {
 
 		return arr[n];
 	}
-
+		
 	public static int min(int n, int k) {
-		return n < k ? n : k;
+		return (n < k) ? n : k;
 	}
 
 	public static boolean isPrime(int n) {
